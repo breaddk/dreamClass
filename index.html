@@ -49,10 +49,6 @@
 
     const contentWriter = {
         reWrite : (pointer) => {
-            if (pointer == 2) {
-                showResult();
-                return;
-            }
             leftContent.innerText =  question[pointer][0];
             rightContent.innerText = question[pointer][1];
         }
@@ -94,16 +90,24 @@
     leftDiv.addEventListener("click", () => {
         clickEvent.choose(pointer);
         answer.push(question[pointer][0]);
-        contentWriter.reWrite(pointer);
-        pointer ++;
+        pointer++;
+        if (pointer == 3) {
+            showResult();
+        } else {
+            contentWriter.reWrite(pointer);
+        }
     })
 
     
     rightDiv.addEventListener("click", () => {
         clickEvent.choose(pointer);
         answer.push(question[pointer][1]);
-        contentWriter.reWrite(pointer);
-        pointer ++;
+        pointer++;
+        if (pointer == 3) {
+            showResult();
+        } else {
+            contentWriter.reWrite(pointer);
+        }
     })
 
     window.onload = () => {
