@@ -1,3 +1,172 @@
+<!DOCTYPE html>
 <html>
-    <h1> hihi
+    <head>
+        <meta charset="utf-8">
+        <!-- jquery cdn -->
+	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dongle&family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-contents">
+            <div id="content-head">
+                <span class="title">
+                    둘 중 선택하세요.
+                </span>
+            </div>
+            <div id="image-content">
+                <div id="left">
+                    <div id="left-content"></div>
+                </div>
+                <div id="right">
+                    <div id="right-content"></div>
+                </div>
+            </div>
+            <div id="result-content">
+            </div>
+        </div>
+        <div> <a href="https://kr.freepik.com/free-vector/istj-mbti-type-isometric-composition-with-geometric-figures-and-female-character-writing-on-tablet-on-grey-background-vector-illustration_70828739.htm#query=mbti&position=26&from_view=keyword&track=sph&uuid=47ced9e0-dbc9-44c7-a710-a8c76945b274">작가 macrovector_official</a> 출처 Freepik </div>
+    </body>
 </html>
+<script>
+
+    const leftDiv = document.getElementById("left");
+    const rightDiv = document.getElementById("right");
+
+    const leftContent = document.getElementById("left-content");
+    const rightContent = document.getElementById("right-content");
+
+    
+    const question = [
+        [ "가", "나" ],
+        [ "다", "라" ],
+        [ "마", "바" ]
+    ];
+    const answer = [];
+    let pointer = 0;
+
+
+    const contentWriter = {
+        reWrite : (pointer) => {
+            if (pointer == 2) {
+                showResult();
+                return;
+            }
+            leftContent.innerText =  question[pointer][0];
+            rightContent.innerText = question[pointer][1];
+        }
+    }
+
+    const showResult = () => {
+        const isfp = ["가", "다", "마"];
+        const esfj = ["가", "다", "바"];
+        const resultJoin = answer.join("");
+        let imageUrl;
+        switch (resultJoin) {
+            case isfp.join(""):
+                imageUrl = "./image/isfp.png";
+                break;
+            case esfj.join(""):
+                imageUrl = "./image/esfj.png";
+                break;
+            default:
+                imageUrl = "./image/istj.png";
+
+        }
+        
+        $("#image-content").hide();
+        $("#result-content").show();
+        const styleObj = {
+            "background": `url(${imageUrl}) no-repeat`,
+            "background-size": "contain"
+        }
+        $("#result-content").css(styleObj);
+    }
+
+
+    const clickEvent = {
+        choose: (index) => {
+            alert(index + '번째 질문을 클릭했습니다.');
+        }
+    }
+
+    leftDiv.addEventListener("click", () => {
+        clickEvent.choose(pointer);
+        answer.push(question[pointer][0]);
+        contentWriter.reWrite(pointer);
+        pointer ++;
+    })
+
+    
+    rightDiv.addEventListener("click", () => {
+        clickEvent.choose(pointer);
+        answer.push(question[pointer][1]);
+        contentWriter.reWrite(pointer);
+        pointer ++;
+    })
+
+    window.onload = () => {
+        contentWriter.reWrite(pointer);
+        $("#result-content").hide();
+    }
+
+</script>
+<style>
+    html {
+        width: 100%;
+        height: 100%;
+        font-family: 'Dongle', sans-serif;
+        font-family: 'East Sea Dokdo', sans-serif;
+    }
+    body {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+    }
+    #main-contents {
+        width: 60%;
+        height: 60%;
+        margin: auto;
+        background-color: aqua;
+        display: flex;
+        flex-direction: column;
+    }
+    #main-contents > #content-head {
+        width: 100%;
+        height: 20%;
+        display: flex;
+    }
+    #content-head > .title {
+        margin: auto;
+        font-size: 30px;
+    }
+    #image-content {
+        display: flex;
+        flex: auto
+    }
+    #left {
+        width: 50%;
+        height: 400px;
+        background-color: blue;
+        margin: auto;
+    }
+
+    #left > div , #right > div {
+        color: white;
+        margin: auto;
+    }
+
+    #right {
+        width: 50%;
+        height: 400px;
+        background-color: brown;
+        margin: auto;
+    }
+
+    #result-content {
+        width: 100%;
+        height: 100%;
+    }
+</style>
