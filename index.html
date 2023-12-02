@@ -17,10 +17,10 @@
             </div>
             <div id="image-content">
                 <div id="left">
-                    <div id="left-content"></div>
+                    <div id="left-content" class="question"></div>
                 </div>
                 <div id="right">
-                    <div id="right-content"></div>
+                    <div id="right-content" class="question"></div>
                 </div>
             </div>
             <div id="result-content">
@@ -39,9 +39,10 @@
 
     
     const question = [
-        [ "가", "나" ],
-        [ "다", "라" ],
-        [ "마", "바" ]
+        [ "나는 I야", "나는 E야"],
+        [ "나는 S야", "나는 N이야" ],
+        [ "나는 F야", "나는 T야" ],
+        [ "나는 P야", "나는 J야" ]
     ];
     const answer = [];
     let pointer = 0;
@@ -55,8 +56,8 @@
     }
 
     const showResult = () => {
-        const isfp = ["가", "다", "마"];
-        const esfj = ["가", "다", "바"];
+        const isfp = [0,0,0,0];
+        const esfj = [1,0,0,1];
         const resultJoin = answer.join("");
         let imageUrl;
         switch (resultJoin) {
@@ -81,17 +82,10 @@
     }
 
 
-    const clickEvent = {
-        choose: (index) => {
-            alert(index + '번째 질문을 클릭했습니다.');
-        }
-    }
-
     leftDiv.addEventListener("click", () => {
-        clickEvent.choose(pointer);
-        answer.push(question[pointer][0]);
+        answer.push(0);
         pointer++;
-        if (pointer == 3) {
+        if (pointer == question.length) {
             showResult();
         } else {
             contentWriter.reWrite(pointer);
@@ -100,10 +94,9 @@
 
     
     rightDiv.addEventListener("click", () => {
-        clickEvent.choose(pointer);
-        answer.push(question[pointer][1]);
+        answer.push(1);
         pointer++;
-        if (pointer == 3) {
+        if (pointer == question.length) {
             showResult();
         } else {
             contentWriter.reWrite(pointer);
@@ -150,11 +143,17 @@
         display: flex;
         flex: auto
     }
+
+    #image-content .question {
+        font-size: 30px;
+    }
+
     #left {
         width: 50%;
         height: 400px;
         background-color: blue;
         margin: auto;
+        display: flex;
     }
 
     #left > div , #right > div {
@@ -167,6 +166,7 @@
         height: 400px;
         background-color: brown;
         margin: auto;
+        display: flex;
     }
 
     #result-content {
